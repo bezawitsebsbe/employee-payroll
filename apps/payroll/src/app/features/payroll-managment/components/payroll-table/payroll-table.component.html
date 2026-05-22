@@ -1,0 +1,88 @@
+<div class="payroll-table-container">
+  <!-- Loading State -->
+  <div *ngIf="loading$ | async" class="text-center py-12">
+    <nz-spin nzSize="large"></nz-spin>
+    <p class="mt-4 text-gray-500">Loading payroll records...</p>
+  </div>
+
+  <!-- Error State -->
+  <div *ngIf="error$ | async" class="text-center py-12">
+    <nz-icon nzType="exclamation-circle" class="text-5xl text-red-500 mb-4"></nz-icon>
+    <h3 class="text-lg font-medium text-red-600">Error Loading Data</h3>
+    <p class="mt-2 text-gray-600">{{ error$ | async }}</p>
+  </div>
+
+  <!-- Table Content -->
+  <div *ngIf="!(loading$ | async) && !(error$ | async)">
+    <nz-table
+      #basicTable
+      [nzData]="(payrollRecords$ | async) || []"
+      [nzFrontPagination]="true"
+      [nzPageSize]="10"
+      [nzShowSizeChanger]="true"
+      [nzShowQuickJumper]="true"
+      class="w-full"
+    >
+      <thead>
+        <tr>
+          <th nzCustomThWidth="15%">Employee Name</th>
+          <th nzCustomThWidth="10%">Employee ID</th>
+          <th nzCustomThWidth="12%">Department</th>
+          <th nzCustomThWidth="10%">Base Salary</th>
+          <th nzCustomThWidth="10%">Monthly Bonus</th>
+          <th nzCustomThWidth="10%">Deductions</th>
+          <th nzCustomThWidth="12%">Net Salary</th>
+          <th nzCustomThWidth="8%">Status</th>
+          <th nzCustomThWidth="13%">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let record of basicTable.data">
+          <td>
+            <div class="flex items-center">
+              <div class="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center text-white text-sm font-medium mr-3">
+                {{ record.employeeName.charAt(0).toUpperCase() }}
+              </div>
+              <span class="font-medium">{{ record.employeeName }}</span>
+            </div>
+          </td>
+          <td>
+            <span class="text-gray-600 text-sm">{{ record.employeeId }}</span>
+          </td>
+          <td>
+            <nz-tag [nzColor]="'blue'">{{ record.department }}</nz-tag>
+          </td>
+          <td>
+            <span class="font-medium text-gray-900">{{ formatCurrency(record.baseSalary) }}</span>
+          </td>
+          <td>
+            <span class="text-green-600 font-medium">+{{ formatCurrency(record.monthlyBonus) }}</span>
+          </td>
+          <td>
+            <span class="text-red-600 font-medium">-{{ formatCurrency(record.deductions) }}</span>
+          </td>
+          <td>
+            <span class="font-bold text-gray-900">{{ formatCurrency(record.netSalary) }}</span>
+          </td>
+          <td>
+            <nz-tag [nzColor]="getStatusColor(record.status)">{{ record.status }}</nz-tag>
+          </td>
+          <td>
+            <div class="flex gap-2">
+              <button nz-button nzType="default" nzSize="small" (click)="onEdit(record)">
+                <span nz-icon nzType="edit"></span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </nz-table>
+
+    <!-- Empty State -->
+    <div *ngIf="(payrollRecords$ | async)?.length === 0 || (payrollRecords$ | async) === null" class="text-center py-12">
+      <nz-icon nzType="inbox" class="text-5xl mb-4 opacity-40"></nz-icon>
+      <h3 class="text-lg font-medium text-gray-900">No Payroll Records</h3>
+      <p class="mt-2 text-gray-600">No payroll records found. Add your first payroll record to get started.</p>
+    </div>
+  </div>
+</div>

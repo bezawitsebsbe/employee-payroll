@@ -1,0 +1,10 @@
+<div class="employee-form-container">
+  <app-entity-form
+    [standalone]="true"
+    [mode]="formMode"
+    [fields]="formFields"
+    [data]="employeeData"
+    (submit)="onFormSubmit($event)"
+    (cancel)="onFormCancel()"
+  ></app-entity-form>
+</div>

@@ -1,0 +1,17 @@
+import { Component } from '@angular/core';
+import { RouterModule } from '@angular/router';
+import { CommonModule } from '@angular/common';
+
+@Component({
+  imports: [RouterModule, CommonModule],
+  selector: 'app-root',
+  templateUrl: './app.html',
+  styleUrl: './app.scss',
+})
+export class App {
+  protected title = 'employee-portal';
+  
+  constructor() {
+    console.log('App component initialized');
+  }
+}

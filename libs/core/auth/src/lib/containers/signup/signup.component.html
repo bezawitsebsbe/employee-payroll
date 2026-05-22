@@ -1,0 +1,186 @@
+<div class="signup-container">
+  <div class="signup-card">
+
+    <!-- Header -->
+    <div class="signup-header">
+      <h2>Create your account</h2>
+      <p>
+        Enter your details to create your account
+      </p>
+    </div>
+
+    <form [formGroup]="signupForm" (ngSubmit)="onSubmit()" class="signup-form">
+
+      <!-- First + Last Name -->
+      <div class="name-fields">
+
+        <!-- First Name -->
+        <div class="form-group">
+          <label>
+            First Name
+          </label>
+
+          <input
+            type="text"
+            formControlName="firstName"
+            placeholder="Enter your first name"
+            (input)="onNameChange()"
+          />
+
+          <p *ngIf="signupForm.get('firstName')?.touched && signupForm.get('firstName')?.errors?.['required']"
+             class="error-message">
+            First name is required
+          </p>
+
+          <p *ngIf="signupForm.get('firstName')?.touched && signupForm.get('firstName')?.errors?.['minlength']"
+             class="error-message">
+            First name must be at least 2 characters
+          </p>
+        </div>
+
+        <!-- Last Name -->
+        <div class="form-group">
+          <label>
+            Last Name
+          </label>
+
+          <input
+            type="text"
+            formControlName="lastName"
+            placeholder="Enter your last name"
+          />
+
+          <p *ngIf="signupForm.get('lastName')?.touched && signupForm.get('lastName')?.errors?.['required']"
+             class="error-message">
+            Last name is required
+          </p>
+
+          <p *ngIf="signupForm.get('lastName')?.touched && signupForm.get('lastName')?.errors?.['minlength']"
+             class="error-message">
+            Last name must be at least 2 characters
+          </p>
+        </div>
+      </div>
+
+      <!-- Email -->
+      <div class="form-group">
+        <label>
+          Email
+        </label>
+
+        <input
+          type="email"
+          formControlName="email"
+          placeholder="Enter your email"
+          (input)="onEmailChange()"
+        />
+
+        <p *ngIf="signupForm.get('email')?.touched && signupForm.get('email')?.errors?.['required']"
+           class="error-message">
+          Email is required
+        </p>
+
+        <p *ngIf="signupForm.get('email')?.touched && signupForm.get('email')?.errors?.['email']"
+           class="error-message">
+          Please enter a valid email
+        </p>
+      </div>
+
+      <!-- Password -->
+      <div class="form-group">
+        <label>
+          Password
+        </label>
+
+        <div style="position: relative;">
+          <input
+            [type]="showPassword ? 'text' : 'password'"
+            formControlName="password"
+            placeholder="Create a password"
+            (input)="onPasswordChange()"
+          />
+
+          <button
+            type="button"
+            (click)="togglePasswordVisibility()"
+            style="position: absolute; right: 12px; top: 12px; background: none; border: none; cursor: pointer;"
+          >
+            {{ showPassword ? '🙈' : '👁️' }}
+          </button>
+        </div>
+
+        <p *ngIf="signupForm.get('password')?.touched && signupForm.get('password')?.errors?.['required']"
+           class="error-message">
+          Password is required
+        </p>
+
+        <p *ngIf="signupForm.get('password')?.touched && signupForm.get('password')?.errors?.['minlength']"
+           class="error-message">
+          Password must be at least 6 characters
+        </p>
+      </div>
+
+      <!-- Confirm Password -->
+      <div class="form-group">
+        <label>
+          Confirm Password
+        </label>
+
+        <div style="position: relative;">
+          <input
+            [type]="showConfirmPassword ? 'text' : 'password'"
+            formControlName="confirmPassword"
+            placeholder="Confirm your password"
+            (input)="onConfirmPasswordChange()"
+          />
+
+          <button
+            type="button"
+            (click)="toggleConfirmPasswordVisibility()"
+            style="position: absolute; right: 12px; top: 12px; background: none; border: none; cursor: pointer;"
+          >
+            {{ showConfirmPassword ? '🙈' : '👁️' }}
+          </button>
+        </div>
+
+        <p *ngIf="signupForm.get('confirmPassword')?.touched && signupForm.get('confirmPassword')?.errors?.['required']"
+           class="error-message">
+          Please confirm your password
+        </p>
+
+        <p *ngIf="signupForm.hasError('passwordMismatch') && signupForm.get('confirmPassword')?.touched"
+           class="error-message">
+          Passwords do not match
+        </p>
+      </div>
+
+      <!-- Error banner -->
+      <div *ngIf="errorMessage$ | async as errorMessage"
+           class="error-message">
+        {{ errorMessage }}
+      </div>
+
+      <!-- Submit -->
+      <button
+        type="submit"
+        [disabled]="signupForm.invalid || isLoading"
+        class="submit-btn"
+      >
+        <span *ngIf="!isLoading">Create Account</span>
+        <span *ngIf="isLoading">Creating account...</span>
+      </button>
+
+    </form>
+
+    <!-- Signin link -->
+    <div class="signup-link">
+      Already have an account?
+      <a
+        (click)="navigateToSignin()"
+      >
+        Sign in
+      </a>
+    </div>
+
+  </div>
+</div>

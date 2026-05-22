@@ -1,0 +1,291 @@
+<!-- Modal Mode -->
+<nz-modal
+  *ngIf="!standalone"
+  [(nzVisible)]="visible"
+  [nzTitle]="mode.title"
+  [nzContent]="modalContent"
+  [nzFooter]="modalFooter"
+  (nzOnCancel)="handleCancel()"
+  (nzOnOk)="handleOk()"
+  [nzOkLoading]="loading"
+  [nzWidth]="850"
+  [nzCentered]="true"
+>
+  <ng-template #modalContent>
+    <form #formElement [formGroup]="entityForm" class="entity-form p-8">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-7">
+        <ng-container *ngFor="let field of fields; trackBy: trackByField">
+
+          <!-- Skip Employee ID and Performance Score fields -->
+          <ng-container *ngIf="field.key !== 'empId' && field.key !== 'performanceScore'">
+
+            <!-- Text Input -->
+            <div *ngIf="getFieldType(field) === 'text'" class="form-field">
+              <nz-form-item>
+                <nz-form-label [nzRequired]="isFieldRequired(field)">{{ field.name }}</nz-form-label>
+                <nz-form-control [nzErrorTip]="getErrorTip(field)">
+                  <input
+                    nz-input
+                    [formControlName]="field.key"
+                    [placeholder]="getFieldPlaceholder(field)"
+                    [nzSize]="'large'"
+                  />
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+
+            <!-- Number Input (for any other number fields if they exist) -->
+            <div *ngIf="getFieldType(field) === 'number'" class="form-field">
+              <nz-form-item>
+                <nz-form-label [nzRequired]="isFieldRequired(field)">{{ field.name }}</nz-form-label>
+                <nz-form-control [nzErrorTip]="getErrorTip(field)">
+                  <input
+                    nz-input
+                    type="number"
+                    [formControlName]="field.key"
+                    [placeholder]="getFieldPlaceholder(field)"
+                    [nzSize]="'large'"
+                  />
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+
+            <!-- Email Input -->
+            <div *ngIf="getFieldType(field) === 'email'" class="form-field">
+              <nz-form-item>
+                <nz-form-label [nzRequired]="isFieldRequired(field)">{{ field.name }}</nz-form-label>
+                <nz-form-control [nzErrorTip]="getErrorTip(field)">
+                  <input
+                    nz-input
+                    type="email"
+                    [formControlName]="field.key"
+                    [placeholder]="getFieldPlaceholder(field)"
+                    [nzSize]="'large'"
+                  />
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+
+            <!-- Select Input -->
+            <div *ngIf="getFieldType(field) === 'select'" class="form-field">
+              <nz-form-item>
+                <nz-form-label [nzRequired]="isFieldRequired(field)">{{ field.name }}</nz-form-label>
+                <nz-form-control [nzErrorTip]="getErrorTip(field)">
+                  <nz-select
+                    [formControlName]="field.key"
+                    [nzPlaceHolder]="getFieldPlaceholder(field)"
+                    [nzSize]="'large'"
+                    style="width: 100%"
+                  >
+                    <nz-option
+                      *ngFor="let option of getFieldOptions(field)"
+                      [nzValue]="option.value"
+                      [nzLabel]="option.label"
+                    ></nz-option>
+                  </nz-select>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+
+            <!-- Date Input -->
+            <div *ngIf="getFieldType(field) === 'date'" class="form-field">
+              <nz-form-item>
+                <nz-form-label [nzRequired]="isFieldRequired(field)">{{ field.name }}</nz-form-label>
+                <nz-form-control [nzErrorTip]="getErrorTip(field)">
+                  <nz-date-picker
+                    [formControlName]="field.key"
+                    [nzSize]="'large'"
+                    style="width: 100%"
+                    [nzPlaceHolder]="getFieldPlaceholder(field)"
+                  ></nz-date-picker>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+
+            <!-- Boolean Input -->
+            <div *ngIf="getFieldType(field) === 'boolean'" class="form-field">
+              <nz-form-item>
+                <nz-form-label>{{ field.name }}</nz-form-label>
+                <nz-form-control>
+                  <nz-checkbox [formControlName]="field.key" class="mt-1 block">
+                    {{ field.placeholder || 'Enable' }}
+                  </nz-checkbox>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+
+          </ng-container>
+        </ng-container>
+      </div>
+    </form>
+  </ng-template>
+
+  <ng-template #modalFooter>
+    <div class="flex justify-end gap-3">
+      <button nz-button nzType="default" (click)="handleCancel()">Cancel</button>
+      <button nz-button nzType="primary" (click)="handleOk()" [nzLoading]="loading">
+        {{ mode.mode === 'create' ? 'Create' : 'Update' }}
+      </button>
+    </div>
+  </ng-template>
+</nz-modal>
+
+<!-- Standalone Mode -->
+<div *ngIf="standalone" class="entity-form-container">
+  <h2 class="text-xl font-semibold text-gray-900 mb-6">{{ mode.title }}</h2>
+  <form #formElement [formGroup]="entityForm" class="entity-form p-8">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-7">
+      <ng-container *ngFor="let field of fields; trackBy: trackByField">
+
+        <!-- Skip Employee ID and Performance Score fields -->
+        <ng-container *ngIf="field.key !== 'empId' && field.key !== 'performanceScore'">
+
+          <!-- Text Input -->
+          <div *ngIf="getFieldType(field) === 'text'" class="col-span-1">
+            <nz-form-item>
+              <nz-form-label [nzRequired]="isFieldRequired(field)">{{ field.name }}</nz-form-label>
+              <nz-form-control [nzErrorTip]="getErrorTip(field)">
+                <input
+                  nz-input
+                  [formControlName]="field.key"
+                  [placeholder]="getFieldPlaceholder(field)"
+                  [nzSize]="'large'"
+                  [readonly]="readonly"
+                />
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+
+          <!-- Email Input -->
+          <div *ngIf="getFieldType(field) === 'email'" class="col-span-1">
+            <nz-form-item>
+              <nz-form-label [nzRequired]="isFieldRequired(field)">{{ field.name }}</nz-form-label>
+              <nz-form-control [nzErrorTip]="getErrorTip(field)">
+                <input
+                  nz-input
+                  type="email"
+                  [formControlName]="field.key"
+                  [placeholder]="getFieldPlaceholder(field)"
+                  [nzSize]="'large'"
+                  [readonly]="readonly"
+                />
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+
+          <!-- Number Input -->
+          <div *ngIf="getFieldType(field) === 'number'" class="col-span-1">
+            <nz-form-item>
+              <nz-form-label [nzRequired]="isFieldRequired(field)">{{ field.name }}</nz-form-label>
+              <nz-form-control [nzErrorTip]="getErrorTip(field)">
+                <input
+                  nz-input
+                  type="number"
+                  [formControlName]="field.key"
+                  [placeholder]="getFieldPlaceholder(field)"
+                  [nzSize]="'large'"
+                  [readonly]="readonly"
+                />
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+
+          <!-- Select Input -->
+          <div *ngIf="getFieldType(field) === 'select'" class="col-span-1">
+            <nz-form-item>
+              <nz-form-label [nzRequired]="isFieldRequired(field)">{{ field.name }}</nz-form-label>
+              <nz-form-control [nzErrorTip]="getErrorTip(field)">
+                <nz-select
+                  [formControlName]="field.key"
+                  [nzPlaceHolder]="getFieldPlaceholder(field)"
+                  [nzSize]="'large'"
+                  style="width: 100%"
+                  [nzDisabled]="readonly"
+                >
+                  <nz-option
+                    *ngFor="let option of getFieldOptions(field)"
+                    [nzValue]="option.value"
+                    [nzLabel]="option.label"
+                  ></nz-option>
+                </nz-select>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+
+          <!-- Date Input -->
+          <div *ngIf="getFieldType(field) === 'date'" class="col-span-1">
+            <nz-form-item>
+              <nz-form-label [nzRequired]="isFieldRequired(field)">{{ field.name }}</nz-form-label>
+              <nz-form-control [nzErrorTip]="getErrorTip(field)">
+                <nz-date-picker
+                  [formControlName]="field.key"
+                  [nzSize]="'large'"
+                  style="width: 100%"
+                  [nzPlaceHolder]="getFieldPlaceholder(field)"
+                  [nzDisabled]="readonly"
+                ></nz-date-picker>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+
+          <!-- Boolean Input -->
+          <div *ngIf="getFieldType(field) === 'boolean'" class="col-span-1">
+            <nz-form-item>
+              <nz-form-label>{{ field.name }}</nz-form-label>
+              <nz-form-control>
+                <nz-checkbox [formControlName]="field.key" [disabled]="readonly" class="mt-1 block">
+                  {{ field.placeholder || 'Enable' }}
+                </nz-checkbox>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+
+        </ng-container>
+      </ng-container>
+    </div>
+
+    <!-- Form Actions -->
+    <div *ngIf="showActions" class="form-actions mt-10 pt-6 border-t border-gray-200 flex justify-between gap-4">
+      <!-- Left side - Delete button -->
+      <button 
+        *ngIf="mode.mode === 'edit' && !readonly"
+        nz-button 
+        nzType="default" 
+        nzDanger
+        (click)="$event.stopPropagation(); onDelete(); $event.preventDefault()" 
+        [disabled]="loading"
+        class="min-w-[120px]"
+        type="button"
+      >
+        Delete
+      </button>
+      
+      <!-- Right side - Cancel and Update buttons -->
+      <div class="flex gap-4">
+        <button 
+          *ngIf="!readonly"
+          nz-button 
+          nzType="default" 
+          (click)="onCancel(); $event.preventDefault()" 
+          [disabled]="loading"
+          class="min-w-[120px]"
+          type="button"
+        >
+          Cancel
+        </button>
+        <button 
+          *ngIf="!readonly"
+          nz-button 
+          nzType="primary" 
+          (click)="onSubmit()" 
+          [nzLoading]="loading || externalLoading"
+          [disabled]="entityForm.invalid || loading || externalLoading"
+          class="min-w-[140px] bg-orange-500 hover:bg-orange-600 border-orange-500 hover:border-orange-600"
+          type="button"
+        >
+          {{ mode.mode === 'create' ? 'Create Employee' : 'Update Employee' }}
+        </button>
+      </div>
+    </div>
+  </form>
+</div>

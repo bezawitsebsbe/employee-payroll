@@ -1,0 +1,48 @@
+<div class="payroll-management-container">
+  <!-- Sidebar -->
+  <app-sidebar [items]="navItems" [currentApp]="'payroll'"></app-sidebar>
+  
+  <!-- Main Content -->
+  <div class="container">
+    <!-- Header Section -->
+    <div class="header-section">
+      <div class="header-content">
+        <h1 class="page-title">Payroll Management</h1>
+        <p class="page-subtitle">Manage employee salaries, bonuses, and deductions</p>
+      </div>
+      <div class="header-actions">
+        <button nz-button nzType="default" class="export-btn" (click)="onExport()">
+          <span nz-icon nzType="export"></span>
+          Export
+        </button>
+        <button nz-button nzType="default" class="add-payroll-btn" (click)="onAddPayroll()" 
+        style="background: #f97316 !important; border-color: #f97316 !important; color: white !important;">
+          <span nz-icon nzType="plus"></span>
+          Add Payroll
+        </button>
+      </div>
+    </div>
+
+    <!-- Statistics Cards -->
+    <div class="statistics-section">
+      <app-payroll-statistics-cards></app-payroll-statistics-cards>
+    </div>
+
+    <!-- Table Section -->
+    <div class="table-section">
+      <app-payroll-table 
+        [searchTerm]="searchTerm"
+        [selectedDepartment]="selectedDepartment"
+        (editRecord)="onEditRecord($event)"
+      ></app-payroll-table>
+    </div>
+  </div>
+
+  <!-- Add Payroll Modal -->
+  <app-add-payroll-modal 
+    *ngIf="isModalVisible"
+    [editingRecord]="editingRecord"
+    (cancel)="onModalCancel()"
+    (save)="onModalSave($event)"
+  ></app-add-payroll-modal>
+</div>

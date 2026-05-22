@@ -1,0 +1,126 @@
+<!-- Main Content -->
+<main class="flex-1 p-4 md:p-6 overflow-y-auto">
+
+  <!-- Header -->
+  <div class="mb-6">
+    <h1 class="text-2xl font-semibold text-gray-900">Dashboard</h1>
+    <p class="text-gray-600 mt-1 text-sm">
+      Welcome back! Here's what's happening today
+    </p>
+  </div>
+
+  <!-- Loading State -->
+  <div class="flex justify-center items-center min-h-[40vh]" *ngIf="loading$ | async">
+    <nz-spin nzSize="large"></nz-spin>
+  </div>
+
+  <!-- Error State -->
+  <div class="text-center py-10" *ngIf="error$ | async as error">
+    <h3 class="text-lg font-semibold text-red-700 mb-3">Error loading dashboard</h3>
+    <p class="text-gray-600 mb-6">{{ error }}</p>
+    <button nz-button nzType="primary" (click)="onRefresh()">
+      Retry
+    </button>
+  </div>
+
+  <!-- Dashboard Content -->
+  <div *ngIf="!(loading$ | async) && !(error$ | async)">
+
+    <!-- Stats Cards - More Compact -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5 mb-8" *ngIf="dashboardStats$ | async as stats">
+      
+      <!-- Total Employees -->
+      <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-5 hover:shadow transition-shadow">
+        <div class="flex items-center justify-between mb-3">
+          <div class="text-blue-600 bg-blue-50 p-2.5 rounded-lg">
+            <nz-icon nzType="team" class="text-lg"></nz-icon>
+          </div>
+        </div>
+        <div class="text-2xl font-bold text-gray-900">{{ (totalEmployees$ | async) || 0 }}</div>
+        <div class="text-sm text-gray-500 mt-1">Total Employees</div>
+      </div>
+
+      <!-- Total Payroll -->
+      <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-5 hover:shadow transition-shadow">
+        <div class="flex items-center justify-between mb-3">
+          <div class="text-green-600 bg-green-50 p-2.5 rounded-lg">
+            <nz-icon nzType="dollar" class="text-lg"></nz-icon>
+          </div>
+        </div>
+        <div class="text-2xl font-bold text-gray-900">
+          {{ stats.totalPayroll | currency:'USD':'symbol':'1.0-0' }}
+        </div>
+        <div class="text-sm text-gray-500 mt-1">Total Payroll</div>
+      </div>
+
+      <!-- Total Deductions -->
+      <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-5 hover:shadow transition-shadow">
+        <div class="flex items-center justify-between mb-3">
+          <div class="text-orange-600 bg-orange-50 p-2.5 rounded-lg">
+            <nz-icon nzType="minus" class="text-lg"></nz-icon>
+          </div>
+        </div>
+        <div class="text-2xl font-bold text-gray-900">
+          {{ stats.totalDeductions | currency:'USD':'symbol':'1.0-0' }}
+        </div>
+        <div class="text-sm text-gray-500 mt-1">Total Deductions</div>
+      </div>
+    </div>
+
+    <!-- Recent Activities Section - More Compact -->
+    <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-5">
+      <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-5">
+        <h2 class="text-lg font-semibold text-gray-900">Recent Activities</h2>
+        <div class="flex gap-3 flex-wrap">
+          <button nz-button nzSize="small" (click)="onRefresh()">
+            <nz-icon nzType="sync"></nz-icon>
+            Refresh
+          </button>
+          <button nz-button nzSize="small" nzType="default" (click)="onClearActivities()">
+            <nz-icon nzType="delete"></nz-icon>
+            Clear
+          </button>
+        </div>
+      </div>
+
+      <!-- Activities List -->
+      <div *ngIf="recentActivities$ | async as activities; else emptyActivities">
+        <div class="space-y-3">
+          <div class="flex items-start gap-4 p-4 rounded-lg hover:bg-gray-50 transition-colors" 
+               *ngFor="let activity of activities">
+            <div class="activity-icon p-2.5 rounded-lg text-sm" [ngClass]="{
+              'bg-blue-50 text-blue-600': activity.type === 'employee',
+              'bg-green-50 text-green-600': activity.type === 'payroll',
+              'bg-orange-50 text-orange-600': activity.type === 'attendance',
+              'bg-purple-50 text-purple-600': activity.type === 'system'
+            }">
+              <nz-icon [nzType]="getActivityIcon(activity.type)" class="text-base"></nz-icon>
+            </div>
+
+            <div class="flex-1 min-w-0">
+              <div class="font-medium text-gray-900 text-sm">{{ activity.title }}</div>
+              <div class="text-sm text-gray-600 mt-0.5 line-clamp-2">{{ activity.description }}</div>
+              <div class="text-xs text-gray-500 mt-2 flex items-center gap-1.5">
+                <nz-icon nzType="clock-circle" class="text-xs"></nz-icon>
+                {{ formatActivityTime(activity.timestamp) }}
+              </div>
+            </div>
+
+            <nz-tag [nzColor]="getActivityTagColor(activity.type)" class="text-xs whitespace-nowrap">
+              {{ getActivityTypeLabel(activity.type) }}
+            </nz-tag>
+          </div>
+        </div>
+      </div>
+
+      <ng-template #emptyActivities>
+        <div class="text-center py-10 text-gray-500">
+          <nz-icon nzType="inbox" class="text-4xl mb-3 opacity-40"></nz-icon>
+          <h3 class="text-base font-medium">No recent activities</h3>
+          <p class="mt-1 text-sm">Activities will appear here as you use the system</p>
+        </div>
+      </ng-template>
+    </div>
+
+  </div>
+</main>

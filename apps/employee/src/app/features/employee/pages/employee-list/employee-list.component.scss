@@ -1,0 +1,53 @@
+.employee-list-container {
+  padding: 24px;
+  background: #f5f5f5;
+  min-height: 100vh;
+}
+
+.employee-tabs {
+  ::ng-deep .ant-tabs-nav {
+    margin-bottom: 24px;
+  }
+
+  ::ng-deep .ant-tabs-tab {
+    font-weight: 500;
+    
+    &.ant-tabs-tab-active {
+      font-weight: 600;
+    }
+  }
+}
+
+.tab-content {
+  background: white;
+  border-radius: 8px;
+  padding: 16px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+// Entity table customization
+::ng-deep .entity-table-container {
+  .ant-table {
+    border-radius: 8px;
+    
+    .ant-table-thead > tr > th {
+      background: #fafafa;
+      font-weight: 600;
+    } 
+    
+    .ant-table-tbody > tr:hover > td {
+      background: #f5f5f5;
+    }
+  }
+}
+
+// Responsive design
+@media (max-width: 768px) {
+  .employee-list-container {
+    padding: 16px;
+  }
+  
+  .tab-content {
+    padding: 12px;
+  }
+}

@@ -1,0 +1,77 @@
+.employee-detail-container {
+  padding: 24px;
+  max-width: 1200px;
+  margin: 0 auto;
+  
+  .form-field {
+    margin-bottom: 1rem;
+    
+    .form-label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 500;
+      color: #333;
+      font-size: 14px;
+    }
+  }
+  
+  .grid {
+    align-items: start;
+  }
+}
+
+.employee-profile-card {
+  .ant-card-head-title {
+    font-size: 18px;
+    font-weight: 600;
+  }
+}
+
+.ant-descriptions {
+  .ant-descriptions-item-label {
+    font-weight: 500;
+    color: #666;
+  }
+  
+  .ant-descriptions-item-content {
+    font-weight: 400;
+  }
+}
+
+.ant-avatar {
+  border: 3px solid #fff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+:host ::ng-deep .entity-form .grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 1rem !important;
+      }
+      :host ::ng-deep .entity-form .grid > * {
+        min-width: 0 !important;
+      }
+      @media (max-width: 768px) {
+        :host ::ng-deep .entity-form .grid {
+          grid-template-columns: 1fr !important;
+        }
+      }
+      /* Hide modal form section to prevent duplicates */
+      :host ::ng-deep nz-modal {
+        display: none !important;
+      }
+      :host ::ng-deep .modal-content {
+        display: none !important;
+      }
+
+@media (max-width: 768px) {
+  .employee-detail-container {
+    max-width: 100%;
+    padding: 1rem;
+  }
+  
+  .ant-descriptions {
+    .ant-descriptions-item {
+      padding-bottom: 12px;
+    }
+  }
+}

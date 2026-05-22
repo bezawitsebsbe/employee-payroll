@@ -1,0 +1,32 @@
+<!-- Main Content -->
+<main class="flex-1 p-6 md:p-8 overflow-y-auto bg-gray-50">
+  <!-- Header -->
+  <div
+    class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8"
+  >
+    <div>
+      <h1 class="text-2xl font-bold text-gray-900">Employee Management</h1>
+      <p class="text-gray-600">
+        Manage employee profiles, performance metrics, and compensation
+        details
+      </p>
+    </div>
+    <!-- Add Employee button will be handled by entity-table component -->
+  </div>
+
+  <!-- Entity Table Component -->
+  <main class="entity-table-container" *ngIf="tableSetting as setting">
+    <app-entity-table
+      [config]="tableConfig"
+      [data]="tableData"
+      [setting]="setting"
+      [headerAction]="addEmployeeAction"
+      [loading]="loading"
+      (action)="onTableAction($event)"
+      (filtersChange)="onFiltersChange($event)"
+      (sortChange)="onSortChange($event)"
+      (paginationChange)="onPaginationChange($event)"
+      (rowClick)="onRowClick($event)"
+    ></app-entity-table>
+  </main>
+</main>

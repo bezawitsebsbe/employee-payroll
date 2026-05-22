@@ -1,0 +1,263 @@
+:host {
+  display: block;
+  width: 100%;
+}
+
+.dashboard-layout {
+  display: flex;
+  min-height: 100vh;
+  background: #f5f5f5;
+}
+
+.dashboard-main {
+  flex: 1;
+  padding: 24px;
+  overflow-y: auto;
+}
+
+.dashboard-container {
+  padding: 24px;
+  background-color: #f5f5f5;
+  min-height: 100vh;
+}
+
+.dashboard-header {
+  margin-bottom: 24px;
+  
+  h1 {
+    font-size: 28px;
+    font-weight: 600;
+    color: #262626;
+    margin: 0 0 8px 0;
+  }
+  
+  .subtitle {
+    color: #8c8c8c;
+    font-size: 14px;
+  }
+}
+
+.section-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.activities-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.activity-title {
+  font-weight: 500;
+  color: #262626;
+  margin-bottom: 4px;
+}
+
+.activity-description {
+  color: #8c8c8c;
+  font-size: 14px;
+  margin-bottom: 4px;
+}
+
+.activity-time {
+  color: #bfbfbf;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.empty-icon {
+  font-size: 48px;
+  margin-bottom: 16px;
+  opacity: 0.5;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 24px;
+  margin-bottom: 32px;
+  
+  // For 3 cards layout, ensure they're properly spaced
+  @media (min-width: 1024px) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  
+  @media (min-width: 768px) and (max-width: 1023px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.stat-card {
+  background: white;
+  border-radius: 8px;
+  padding: 24px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  
+  &:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    transform: translateY(-2px);
+  }
+  
+  .stat-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    margin-bottom: 16px;
+    
+    &.blue { background-color: #e6f7ff; color: #1890ff; }
+    &.green { background-color: #f6ffed; color: #52c41a; }
+    &.orange { background-color: #fff7e6; color: #fa8c16; }
+    &.purple { background-color: #f9f0ff; color: #722ed1; }
+  }
+  
+  .stat-value {
+    font-size: 32px;
+    font-weight: 700;
+    color: #262626;
+    margin-bottom: 8px;
+  }
+  
+  .stat-label {
+    color: #8c8c8c;
+    font-size: 14px;
+    margin-bottom: 12px;
+  }
+  
+  .stat-change {
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    
+    &.positive { color: #52c41a; }
+    &.negative { color: #ff4d4f; }
+  }
+}
+
+.activities-section {
+  background: white;
+  border-radius: 8px;
+  padding: 24px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  
+  .section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    
+    h2 {
+      font-size: 18px;
+      font-weight: 600;
+      color: #262626;
+      margin: 0;
+    }
+  }
+}
+
+.activity-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px 0;
+  border-bottom: 1px solid #f0f0f0;
+  
+  &:last-child {
+    border-bottom: none;
+  }
+  
+  .activity-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    flex-shrink: 0;
+    
+    &.blue { background-color: #e6f7ff; color: #1890ff; }
+    &.green { background-color: #f6ffed; color: #52c41a; }
+    &.orange { background-color: #fff7e6; color: #fa8c16; }
+    &.purple { background-color: #f9f0ff; color: #722ed1; }
+    &.red { background-color: #fff2f0; color: #ff4d4f; }
+  }
+  
+  .activity-content {
+    flex: 1;
+  }
+  
+  .activity-tag {
+    flex-shrink: 0;
+  }
+}
+
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 200px;
+}
+
+.error-container {
+  text-align: center;
+  padding: 40px;
+  color: #ff4d4f;
+  
+  h3 {
+    margin-bottom: 8px;
+  }
+  
+  p {
+    color: #8c8c8c;
+  }
+}
+
+.empty-state {
+  text-align: center;
+  padding: 40px;
+  color: #8c8c8c;
+  
+  .empty-icon {
+    font-size: 48px;
+    margin-bottom: 16px;
+    opacity: 0.5;
+  }
+}
+
+// Responsive design
+@media (max-width: 768px) {
+  .dashboard-container {
+    padding: 16px;
+  }
+  
+  .dashboard-main {
+    padding: 16px;
+  }
+  
+  .stats-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  
+  .stat-card {
+    padding: 16px;
+    
+    .stat-value {
+      font-size: 24px;
+    }
+  }
+  
+  .activities-section {
+    padding: 16px;
+  }
+}

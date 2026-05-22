@@ -1,0 +1,163 @@
+<div class="modal-overlay" (click)="onBackdropClick($event)">
+  <div class="modal-container">
+    <h2>{{ editingRecord ? 'Edit Payroll Record' : 'Add Payroll Record' }}</h2>
+
+    <div class="form-grid">
+      <div class="form-group">
+        <label>Select Employee *</label>
+        <select 
+          [(ngModel)]="formData.employeeId"
+          name="employeeId"
+          (ngModelChange)="onEmployeeSelect($event)"
+          [class.error]="employeeIdError"
+        >
+          <option value="">Select an employee</option>
+          <option *ngFor="let employee of getAvailableEmployees()" [value]="employee.empId">
+            {{ employee.fullName }} - {{ employee.position }}
+          </option>
+        </select>
+        <div class="error-message" *ngIf="employeeIdError">
+          {{ employeeIdError }}
+        </div>
+        <div class="info-text" *ngIf="getAvailableEmployees().length === 0">
+          All employees are already in the payroll system
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Employee Name</label>
+        <input 
+          type="text" 
+          placeholder="Auto-filled from selection"
+          [(ngModel)]="formData.employeeName"
+          name="employeeName"
+          (input)="onEmployeeNameChange()"
+          [class.error]="employeeNameError"
+          [readonly]="isEmployeeFound()"
+          [class.readonly-field]="isEmployeeFound()"
+        >
+        <div class="error-message" *ngIf="employeeNameError">
+          {{ employeeNameError }}
+        </div>
+        <div class="info-text" *ngIf="isEmployeeFound()">
+          Auto-filled from employee selection
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Employee ID</label>
+        <input 
+          type="text" 
+          placeholder="Auto-filled from selection"
+          [(ngModel)]="formData.employeeId"
+          name="employeeIdDisplay"
+          (input)="onEmployeeIdChange()"
+          [class.error]="employeeIdError"
+          [readonly]="isEmployeeFound()"
+          [class.readonly-field]="isEmployeeFound()"
+        >
+        <div class="error-message" *ngIf="employeeIdError">
+          {{ employeeIdError }}
+        </div>
+        <div class="info-text" *ngIf="isEmployeeFound()">
+          Auto-filled from employee selection
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Position</label>
+        <input 
+          type="text" 
+          placeholder="Auto-filled from selection"
+          [(ngModel)]="formData.department"
+          name="department"
+          (change)="onInputChange()"
+          [readonly]="isEmployeeFound()"
+          [class.readonly-field]="isEmployeeFound()"
+        >
+        <div class="info-text" *ngIf="isEmployeeFound()">
+          Auto-filled from employee record
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Base Salary *</label>
+        <input 
+          type="number" 
+          placeholder="Auto-filled from selection"
+          [(ngModel)]="formData.baseSalary"
+          name="baseSalary"
+          (input)="onInputChange()"
+          [readonly]="isEmployeeFound()"
+          [class.readonly-field]="isEmployeeFound()"
+        >
+        <div class="info-text" *ngIf="isEmployeeFound()">
+          Auto-filled from employee record
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Monthly Bonus</label>
+        <input 
+          type="number" 
+          value="0"
+          [(ngModel)]="formData.monthlyBonus"
+          name="monthlyBonus"
+          (input)="onInputChange()"
+        >
+      </div>
+
+      <div class="form-group">
+        <label>Tax (Based on ETB Income Brackets)</label>
+        <input 
+          type="text" 
+          readonly
+          [value]="'$' + calculatedTax"
+          name="tax"
+          class="readonly-field"
+        >
+        <div class="info-text">Tax calculated based on monthly income (ETB): 0% (≤600), 10% (601-1,650), 15% (1,651-3,200), 20% (3,201-5,250), 25% (5,251-7,800), 30% (7,801-10,900), 35% (>10,900)</div>
+      </div>
+
+      <div class="form-group">
+        <label>Pension (7% of Basic Salary)</label>
+        <input 
+          type="text" 
+          readonly
+          [value]="'$' + calculatedPension"
+          name="pension"
+          class="readonly-field"
+        >
+        <div class="info-text">Automatically calculated as 7% of basic salary</div>
+      </div>
+
+      <div class="form-group">
+        <label>Status</label>
+        <select 
+          [(ngModel)]="formData.status"
+          name="status"
+          (change)="onInputChange()"
+        >
+          <option value="Pending">Pending</option>
+          <option value="Paid">Paid</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="net-salary">
+      Net Salary: <span>${{ calculateNetSalary() }}</span>
+    </div>
+
+    <div class="actions">
+      <button class="cancel" (click)="onClose()">Cancel</button>
+      <button 
+        class="create" 
+        [class.disabled]="!isFormValid()"
+        [disabled]="!isFormValid()"
+        (click)="onSave()"
+      >
+        Create Payroll
+      </button>
+    </div>
+  </div>
+</div>

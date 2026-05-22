@@ -1,0 +1,310 @@
+.entity-form {
+  .grid {
+    display: grid;
+  }
+
+  .grid-cols-1 {
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+  }
+
+  .grid-cols-2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .gap-x-8 {
+    column-gap: 2rem;
+  }
+
+  .gap-y-7 {
+    row-gap: 1rem; // Reduced from 1.75rem to minimize vertical gap
+  }
+
+  .gap-4 {
+    gap: 1rem;
+  }
+
+  // Ensure 2-column layout works on larger screens
+  @media (min-width: 768px) {
+    .grid-cols-1.md\:grid-cols-2 {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  .form-field {
+    margin-bottom: 1rem;
+  }
+
+  .form-label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    color: #262626;
+    font-size: 14px;
+
+    .required-mark {
+      color: #ff4d4f;
+      margin-left: 4px;
+    }
+  }
+
+  .error-message {
+    color: #ff4d4f;
+    font-size: 12px;
+    margin-top: 4px;
+    line-height: 1.4;
+  }
+
+  // Form controls styling
+  nz-input,
+  nz-select,
+  nz-date-picker {
+    width: 100%;
+  }
+
+  // Consistent form layout
+  ::ng-deep .ant-form-item {
+    margin-bottom: 24px;
+  }
+
+  ::ng-deep .ant-form-item-label {
+    text-align: left;
+    padding-bottom: 8px;
+    line-height: 1.4;
+  }
+
+  ::ng-deep .ant-form-item-label > label {
+    height: auto;
+    font-weight: 500;
+    color: #374151;
+    font-size: 14px;
+  }
+
+  ::ng-deep .ant-form-item-control {
+    line-height: 1.4;
+  }
+
+  // Ensure all form items have consistent layout
+  ::ng-deep .ant-form-item {
+    display: block;
+    flex-direction: column;
+  }
+
+  ::ng-deep .ant-form-item-row {
+    flex-direction: column;
+  }
+
+  ::ng-deep .ant-col {
+    flex: 0 0 auto;
+    max-width: 100%;
+  }
+
+  // Checkbox styling
+  nz-checkbox {
+    margin-top: 8px;
+    
+    ::ng-deep .ant-checkbox-wrapper {
+      font-size: 14px;
+      color: #262626;
+    }
+  }
+
+  // Modal content styling
+  ::ng-deep .ant-modal-body {
+    padding: 24px;
+    max-height: 50vh;
+    overflow-y: auto;
+    // Add padding to prevent scrollbar overlap with close button
+    padding-right: 32px;
+    
+    // Make scrollbar shorter to prevent overlap
+    &::-webkit-scrollbar {
+      width: 6px; // Reduced from 8px
+    }
+    
+    &::-webkit-scrollbar-track {
+      background: #f1f1f1;
+      border-radius: 3px; // Reduced from 4px
+      // Shorten the scrollbar track
+      margin-top: 50px; // Add top margin to avoid close button
+      margin-bottom: 20px;
+    }
+    
+    &::-webkit-scrollbar-thumb {
+      background: #c1c1c1;
+      border-radius: 3px; // Reduced from 4px
+      
+      &:hover {
+        background: #a8a8a8;
+      }
+    }
+  }
+
+  ::ng-deep .ant-modal-header {
+    padding: 16px 24px;
+    border-bottom: 1px solid #f0f0f0;
+  }
+
+  ::ng-deep .ant-modal-footer {
+    padding: 16px 24px;
+    border-top: 1px solid #f0f0f0;
+  }
+
+  // Input field focus states
+  ::ng-deep .ant-input:focus,
+  ::ng-deep .ant-select-focused .ant-select-selector,
+  ::ng-deep .ant-picker-focused {
+    border-color: #1890ff;
+    box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.2);
+  }
+
+  // Input field error states
+  ::ng-deep .ant-input-status-error,
+  ::ng-deep .ant-select-status-error .ant-select-selector,
+  ::ng-deep .ant-picker-status-error {
+    border-color: #ff4d4f;
+  }
+
+  ::ng-deep .ant-input-status-error:focus,
+  ::ng-deep .ant-select-status-error.ant-select-focused .ant-select-selector,
+  ::ng-deep .ant-picker-status-error.ant-picker-focused {
+    border-color: #ff4d4f;
+    box-shadow: 0 0 0 2px rgba(255, 77, 79, 0.2);
+  }
+
+  // Select dropdown styling
+  ::ng-deep .ant-select-dropdown {
+    border-radius: 6px;
+    box-shadow: 0 3px 6px -4px rgba(0, 0, 0, 0.12), 0 6px 16px 0 rgba(0, 0, 0, 0.08), 0 9px 28px 8px rgba(0, 0, 0, 0.05);
+  }
+
+  // Date picker styling
+  ::ng-deep .ant-picker {
+    width: 100%;
+  }
+
+  ::ng-deep .ant-picker-dropdown {
+    border-radius: 6px;
+    box-shadow: 0 3px 6px -4px rgba(0, 0, 0, 0.12), 0 6px 16px 0 rgba(0, 0, 0, 0.08), 0 9px 28px 8px rgba(0, 0, 0, 0.05);
+  }
+
+  // Button styling
+  .flex {
+    display: flex;
+  }
+
+  .justify-end {
+    justify-content: flex-end;
+  }
+
+  .space-x-2 > * + * {
+    margin-left: 0.5rem;
+  }
+.form-label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 500;
+  color: #374151;
+  font-size: 14px;
+}
+
+.required-mark {
+  color: #ef4444;
+  margin-left: 2px;
+}
+
+.error-message {
+  margin-top: 4px;
+  font-size: 13px;
+  color: #ef4444;
+}
+
+.form-field {
+  margin-bottom: 4px;
+}
+
+.entity-form-container,
+.employee-detail-container,
+.new-employee-container {
+  // Add padding to prevent scrollbar overlap with close button
+  padding-right: 16px;
+  
+  // Make scrollbar shorter to prevent overlap
+  &::-webkit-scrollbar {
+    width: 6px; // Reduced from 8px
+  }
+  
+  &::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 3px; // Reduced from 4px
+    // Shorten the scrollbar track
+    margin-top: 40px; // Add top margin to avoid close button
+    margin-bottom: 20px;
+  }
+  
+  &::-webkit-scrollbar-thumb {
+    background: #c1c1c1;
+    border-radius: 3px; // Reduced from 4px
+    
+    &:hover {
+      background: #a8a8a8;
+    }
+  }
+}
+
+.standalone-form-container {
+  background: #f9fafb;
+  min-height: 100vh;
+  padding-bottom: 40px;
+}
+  // Responsive design
+  @media (max-width: 768px) {
+    .grid-cols-2 {
+      grid-template-columns: repeat(1, minmax(0, 1fr));
+    }
+
+    ::ng-deep .ant-modal {
+      margin: 0;
+      max-width: 100vw;
+      width: 100vw;
+      height: 100vh;
+    }
+
+    ::ng-deep .ant-modal-content {
+      height: 100vh;
+      border-radius: 0;
+    }
+
+    ::ng-deep .ant-modal-body {
+      max-height: calc(100vh - 120px);
+    }
+  }
+}
+
+// Loading state
+.ant-modal-confirm-loading .ant-modal-btns button {
+  position: relative;
+  
+  &::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 14px;
+    height: 14px;
+    margin: -7px 0 0 -7px;
+    background: transparent;
+    border: 2px solid currentColor;
+    border-radius: 50%;
+    border-top-color: transparent;
+    animation: loadingCircle 1s infinite linear;
+  }
+}
+
+@keyframes loadingCircle {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

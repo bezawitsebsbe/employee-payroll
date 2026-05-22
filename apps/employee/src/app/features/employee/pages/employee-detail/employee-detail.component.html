@@ -1,0 +1,34 @@
+<div class="employee-detail-container max-w-3xl mx-auto max-h-[80vh] overflow-y-auto">
+  <!-- Loading State -->
+  <div *ngIf="loading" class="flex justify-center items-center min-h-96">
+    <nz-spin nzSize="large"></nz-spin>
+  </div>
+
+  <!-- Employee Form -->
+  <div *ngIf="!loading && employee" class="bg-white rounded-lg shadow-sm p-4">
+    <!-- Entity Form Component -->
+    <app-entity-form
+      [data]="employeeRecord"
+      [fields]="fields"
+      [mode]="formMode"
+      [standalone]="true"
+      [readonly]="false"
+      [showActions]="true"
+      [externalLoading]="saving"
+      (submit)="onSave($event)"
+      (cancel)="onCancel()"
+      (delete)="onDelete($event)"
+      (resetLoadingState)="onResetLoadingState()"
+      (testEvent)="onTestEvent()"
+    ></app-entity-form>
+  </div>
+
+  <!-- No Employee Found -->
+  <div *ngIf="!loading && !employee" class="text-center py-12">
+    <div class="text-gray-500 mb-4">
+      <span nz-icon nzType="user" nzTheme="outline" style="font-size: 48px;"></span>
+    </div>
+    <h3 class="text-lg font-medium text-gray-900 mb-2">Employee Not Found</h3>
+    <p class="text-gray-600 mb-4">The employee you're looking for doesn't exist or has been removed.</p>
+  </div>
+</div>

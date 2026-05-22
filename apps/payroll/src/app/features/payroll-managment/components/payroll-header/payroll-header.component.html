@@ -1,0 +1,16 @@
+<div class="payroll-header">
+  <div class="header-content">
+    <h1 class="page-title">Payroll Management</h1>
+    <p class="page-subtitle">Manage employee salaries, bonuses, and deductions</p>
+  </div>
+  <div class="header-actions">
+    <button nz-button nzType="default" class="export-btn" (click)="exportClick.emit()">
+      <span nz-icon nzType="export"></span>
+      Export
+    </button>
+    <button nz-button nzType="primary" class="add-payroll-btn" (click)="addPayrollClick.emit()">
+      <span nz-icon nzType="plus"></span>
+      Add Payroll
+    </button>
+  </div>
+</div>

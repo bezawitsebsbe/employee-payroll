@@ -1,0 +1,96 @@
+.payroll-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 32px;
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  border: 1px solid #f0f0f0;
+  margin-bottom: 24px;
+  
+  .header-content {
+    .page-title {
+      font-size: 32px;
+      font-weight: 700;
+      color: #262626;
+      margin: 0 0 8px 0;
+      line-height: 1.2;
+    }
+    
+    .page-subtitle {
+      font-size: 16px;
+      color: #8c8c8c;
+      margin: 0;
+      line-height: 1.4;
+    }
+  }
+  
+  .header-actions {
+    display: flex;
+    gap: 12px;
+    
+    .export-btn {
+      height: 40px;
+      padding: 0 20px;
+      border-radius: 8px;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      border: 1px solid #d9d9d9;
+      
+      &:hover {
+        border-color: #4096ff;
+        color: #4096ff;
+      }
+    }
+    
+    .add-payroll-btn {
+      height: 40px;
+      padding: 0 20px;
+      border-radius: 8px;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: #1677ff;
+      border-color: #1677ff;
+      
+      &:hover {
+        background: #4096ff;
+        border-color: #4096ff;
+      }
+    }
+  }
+}
+
+// Responsive Design
+@media (max-width: 768px) {
+  .payroll-header {
+    flex-direction: column;
+    gap: 20px;
+    align-items: flex-start;
+    padding: 24px;
+    
+    .header-content {
+      .page-title {
+        font-size: 24px;
+      }
+      
+      .page-subtitle {
+        font-size: 14px;
+      }
+    }
+    
+    .header-actions {
+      width: 100%;
+      justify-content: flex-end;
+      
+      button {
+        flex: 1;
+        justify-content: center;
+      }
+    }
+  }
+}

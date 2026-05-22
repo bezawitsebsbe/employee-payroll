@@ -1,0 +1,39 @@
+  <!-- Main Content -->
+<main class="flex-1 p-6 md:p-8 overflow-y-auto">
+  <!-- Page Title -->
+  <div class="flex justify-between items-center mb-6">
+    <h1 class="text-2xl font-semibold">Attendance</h1>
+    <div class="flex gap-2">
+      <button
+        nz-button
+        nzType="default"
+        (click)="resetAllAttendance()"
+        class="border-gray-300"
+        [nzLoading]="resetting()"
+      >
+        Reset All
+      </button>
+      <button
+        nz-button
+        nzType="default"
+        class="border-blue-300 text-blue-600 hover:bg-blue-50"
+        (click)="refreshAttendanceData()"
+      >
+        Refresh Data
+      </button>
+    </div>
+  </div>
+  
+  <!-- Attendance Table -->
+  <div class="bg-white rounded-xl shadow-sm p-4">
+    <app-entity-table
+      [data]="attendanceTableData$ | async"
+      [config]="tableConfig"
+      [setting]="tableSetting"
+      [viewMode]="{ mode: 'list', label: 'List' }"
+      [loading]="checkingIn() || checkingOut()"
+      (action)="onEntityAction($event.action, $event.data)"
+      (filtersChange)="onFiltersChange($event)"
+    ></app-entity-table>
+  </div>
+</main>

@@ -1,0 +1,63 @@
+<div class="h-screen flex flex-col bg-gray-50">
+
+  <!-- NAVBAR -->
+  <header class="h-16 bg-white border-b shadow-sm flex items-center px-8">
+    
+    <div class="flex items-center justify-between w-full max-w-screen-2xl mx-auto">
+
+      <!-- LEFT SIDE: Logo + Nav -->
+      <div class="flex items-center gap-24">
+        
+        <!-- App Name -->
+        <h1 class="text-2xl font-bold tracking-tight text-gray-900">
+          Employee<span class="text-orange-600">MGMT</span>
+        </h1>
+
+        <!-- Navigation -->
+        <nav class="flex items-center gap-6">
+          <button
+            *ngFor="let item of navItems"
+            [routerLink]="item.path"
+            routerLinkActive="active-nav"
+            class="px-5 py-2.5 text-sm font-medium rounded-xl transition-all duration-200
+                   text-gray-700 hover:text-gray-900 hover:bg-gray-100
+                   active-nav:bg-orange-500 active-nav:text-white active-nav:shadow-sm">
+            {{ item.label }}
+          </button>
+        </nav>
+
+      </div>
+
+      <!-- RIGHT SIDE: User Info -->
+      <div class="flex items-center gap-6">
+
+        <span class="text-sm font-medium text-gray-700">
+          {{ getUserName() }}
+        </span>
+
+        <!-- Avatar -->
+        <div class="w-9 h-9 rounded-2xl bg-orange-500 text-white flex items-center justify-center font-semibold shadow-inner text-lg">
+          {{ getUserInitials() }}
+        </div>
+
+        <!-- Logout Button -->
+        <button
+          (click)="logout()"
+          class="px-5 py-2 text-sm font-medium border border-red-200 text-red-600 rounded-xl 
+                 hover:bg-red-50 hover:border-red-300 transition-all duration-200 flex items-center gap-2">
+          <span>Logout</span>
+        </button>
+
+      </div>
+
+    </div>
+  </header>
+
+  <!-- CONTENT AREA -->
+  <main class="flex-1 p-2 overflow-y-auto bg-gray-50">
+    <div class="max-w-screen-2xl mx-auto">
+      <router-outlet></router-outlet>
+    </div>
+  </main>
+
+</div>
