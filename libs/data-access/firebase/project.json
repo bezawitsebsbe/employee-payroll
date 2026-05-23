@@ -7,24 +7,12 @@
   "tags": [],
   "targets": {
     "build": {
-      "executor": "@nx/js:tsc",
-      "outputs": ["{options.outputPath}"],
-      "options": {
-        "outputPath": "../../../dist/libs/data-access/firebase",
-        "main": "src/index.ts",
-        "tsConfig": "tsconfig.lib.json",
-        "assets": []
-      },
-      "configurations": {
-        "production": {
-          "tsConfig": "tsconfig.lib.prod.json"
-        },
-        "development": {
-          "tsConfig": "tsconfig.lib.json"
-        }
-      },
-      "defaultConfiguration": "production"
-    },
+  "name": "firebase",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/data-access/firebase/src",
+  "projectType": "library",
+  "tags": []
+},
     "test": {
       "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
