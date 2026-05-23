@@ -92,7 +92,7 @@ export class SigninComponent implements OnInit {
   }
 
   navigateToSignup(): void {
-    this.router.navigate(['/auth/signup']);
+    this.router.navigate(['/signup']);
   }
 
   onEmailChange(): void {
