@@ -6,33 +6,12 @@
   "projectType": "library",
   "tags": [],
   "targets": {
-    "build": {
-      "executor": "@nx/angular:package",
-      "outputs": ["{options.outputPath}"],
-      "options": {
-        "project": "libs/ui/entity/ng-package.json"
-      },
-      "configurations": {
-        "production": {
-          "tsConfig": "libs/ui/entity/tsconfig.lib.prod.json"
-        },
-        "development": {
-          "tsConfig": "libs/ui/entity/tsconfig.lib.json"
-        }
-      }
-    },
     "test": {
       "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
       "options": {
         "jestConfig": "libs/ui/entity/jest.config.ts",
         "passWithNoTests": true
-      },
-      "configurations": {
-        "ci": {
-          "ci": true,
-          "coverageReporters": ["text"]
-        }
       }
     },
     "lint": {
