@@ -17,7 +17,6 @@
     "@ngxs/devtools-plugin": "^21.0.0",
     "@ngxs/store": "^21.0.0",
     "@rxweb/reactive-form-validators": "^13.0.1",
-    "@rxweb/reactive-forms": "^2.1.9",
     "firebase": "^12.11.0",
     "lodash": "^4.17.23",
     "ng-zorro-antd": "^21.1.1",
